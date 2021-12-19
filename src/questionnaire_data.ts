@@ -19,7 +19,7 @@ export const frontFrameworks: Question = {
   ]
 }
 
-export const backendFrameworks: Question = {
+export const backendLanguage: Question = {
   text: 'Which language do you use in your day to day job as a backend developer?',
   answers: [
     { id: 1, text: 'JavaScript' },

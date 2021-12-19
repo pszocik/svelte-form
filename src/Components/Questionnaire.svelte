@@ -2,7 +2,7 @@
   import { username } from '../store'
   import Select from './Select.svelte'
   import {
-    backendFrameworks,
+    backendLanguage,
     frontFrameworks,
     frontOrBackSelect
   } from '../questionnaire_data'
@@ -16,6 +16,7 @@
   let firstSelectValue: Answer
   let secondSelectFrontendValue: Answer
   let secondSelectBackendValue: Answer
+  let firstRangeInput = 0
   // $: secondSelectValue =
   //   firstSelectValue.text === 'Frontend'
   //     ? frontFrameworks.answers[0]
@@ -29,7 +30,7 @@
     const secondAnswer =
       firstAnswer.answer === 'Frontend'
         ? { question: frontFrameworks.text, answer: secondSelectFrontendValue.text }
-        : { question: backendFrameworks.text, answer: secondSelectBackendValue.text }
+        : { question: backendLanguage.text, answer: secondSelectBackendValue.text }
     console.log(firstAnswer)
     console.log(secondAnswer)
   }
@@ -43,8 +44,10 @@
     {#if firstSelectValue.text === 'Frontend'}
       <Select question={frontFrameworks} bind:selected={secondSelectFrontendValue} />
     {:else}
-      <Select question={backendFrameworks} bind:selected={secondSelectBackendValue} />
+      <Select question={backendLanguage} bind:selected={secondSelectBackendValue} />
     {/if}
   {/if}
+  <label for="experience">Years of experience: {firstRangeInput}</label>
+  <input id="experience" type="range" bind:value={firstRangeInput} min="0" max="20" />
   <p><button type="submit">Submit</button></p>
 </form>
