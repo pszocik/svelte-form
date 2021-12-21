@@ -10,5 +10,5 @@ export interface Question {
 
 export interface QuestionWithAnswer {
   question: string
-  answer: string
+  answer: string | number
 }

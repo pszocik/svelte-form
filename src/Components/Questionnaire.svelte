@@ -1,6 +1,6 @@
 <script lang="ts">
   import { username } from '../store'
-  import Select from './Select.svelte'
+  import Select from './Inputs/Select.svelte'
   import {
     backendLanguage,
     frontFrameworks,
@@ -8,46 +8,42 @@
   } from '../questionnaire_data'
   import type { Answer } from '../types/question'
   import { QuestionWithAnswer } from '../types/question'
-  let username_value: string
-  username.subscribe(value => {
-    username_value = value
-  })
+  import RangeInput from './Inputs/RangeInput.svelte'
 
   let firstSelectValue: Answer
   let secondSelectFrontendValue: Answer
   let secondSelectBackendValue: Answer
   let firstRangeInput = 0
-  // $: secondSelectValue =
-  //   firstSelectValue.text === 'Frontend'
-  //     ? frontFrameworks.answers[0]
-  //     : backendFrameworks.answers[0]
 
   const handleForm = (): void => {
     const firstAnswer: QuestionWithAnswer = {
       question: frontOrBackSelect.text,
       answer: firstSelectValue.text
     }
-    const secondAnswer =
+    const secondAnswer: QuestionWithAnswer =
       firstAnswer.answer === 'Frontend'
         ? { question: frontFrameworks.text, answer: secondSelectFrontendValue.text }
         : { question: backendLanguage.text, answer: secondSelectBackendValue.text }
+    const thirdAnswer: QuestionWithAnswer = {
+      question: 'Years of experience: ',
+      answer: firstRangeInput
+    }
     console.log(firstAnswer)
     console.log(secondAnswer)
+    console.log(thirdAnswer)
   }
 </script>
 
-<h3>Hello {username_value}</h3>
+<h3>Hello {$username}</h3>
 
 <form on:submit|preventDefault={handleForm}>
   <Select question={frontOrBackSelect} bind:selected={firstSelectValue} />
-  {#if firstSelectValue}
-    {#if firstSelectValue.text === 'Frontend'}
-      <Select question={frontFrameworks} bind:selected={secondSelectFrontendValue} />
-    {:else}
-      <Select question={backendLanguage} bind:selected={secondSelectBackendValue} />
-    {/if}
+
+  {#if firstSelectValue && firstSelectValue.text === 'Frontend'}
+    <Select question={frontFrameworks} bind:selected={secondSelectFrontendValue} />
+  {:else if firstSelectValue && firstSelectValue.text === 'Backend'}
+    <Select question={backendLanguage} bind:selected={secondSelectBackendValue} />
   {/if}
-  <label for="experience">Years of experience: {firstRangeInput}</label>
-  <input id="experience" type="range" bind:value={firstRangeInput} min="0" max="20" />
+  <RangeInput question={'Years of experience'} bind:inputValue={firstRangeInput} />
   <p><button type="submit">Submit</button></p>
 </form>

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Question } from '../types/question'
+  import { Question } from '../../types/question'
   export let question: Question
   export let selected = undefined
 </script>
