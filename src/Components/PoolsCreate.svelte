@@ -3,6 +3,7 @@
   import { addPool } from '../storage.js'
   import type { poolFormData } from '../types'
 
+  export let showList
   const handleSubmit = ({ target }: Event): void => {
     const data: FormData = new FormData(<HTMLFormElement>target)
     const question = data.get('question')
@@ -14,6 +15,7 @@
       answer2: { value: answer2, count: 0 }
     }
     addPool(pool)
+    showList = true
   }
 </script>
 

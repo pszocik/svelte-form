@@ -12,5 +12,5 @@
 {#if showList}
   <PoolsList />
 {:else}
-  <PoolsCreate />
+  <PoolsCreate bind:showList />
 {/if}
