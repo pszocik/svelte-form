@@ -1,10 +1,10 @@
-interface Answer {
-  value: File | string
+export interface Answer {
+  value: string
   count: number
 }
 
 export interface poolFormData {
-  question: File | string
+  question: string
   answer1: Answer
   answer2: Answer
 }

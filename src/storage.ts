@@ -1,10 +1,10 @@
 import type { poolFormData } from './types'
 
-export const addPool = (pool: poolFormData) => {
-  window.localStorage.setItem(<string>pool.question, JSON.stringify(pool))
+export const addPool = (pool: poolFormData): void => {
+  window.localStorage.setItem(pool.question, JSON.stringify(pool))
 }
 
-export const updatePool = (answer: string, poolName: string) => {
+export const updatePool = (answer: string, poolName: string): void => {
   const pool = JSON.parse(window.localStorage.getItem(poolName)) as poolFormData
   if (answer === 'answer1') {
     pool.answer1.count += 1
@@ -24,4 +24,8 @@ export const allStorage = () => {
   }
 
   return archive
+}
+
+export const deletePool = (poolName: string): void => {
+  window.localStorage.removeItem(poolName)
 }

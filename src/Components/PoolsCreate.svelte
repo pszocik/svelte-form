@@ -9,10 +9,11 @@
     const question = data.get('question')
     const answer1 = data.get('answer1')
     const answer2 = data.get('answer2')
+
     const pool: poolFormData = {
-      question: question,
-      answer1: { value: answer1, count: 0 },
-      answer2: { value: answer2, count: 0 }
+      question: <string>question,
+      answer1: { value: <string>answer1, count: 0 },
+      answer2: { value: <string>answer2, count: 0 }
     }
     addPool(pool)
     showList = true
