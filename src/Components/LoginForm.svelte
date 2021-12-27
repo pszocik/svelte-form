@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { username } from '../store'
+  import { username } from '../stores'
   export let authenticated
 
   interface CredentialsInterface {
