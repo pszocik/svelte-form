@@ -5,6 +5,7 @@
   "scripts": {
     "prebuild": "prettier --write ./src/**/*.{js,svelte,html,ts} & eslint ./src/**/*.{js,ts,svelte}",
     "build": "rollup -c",
+    "gh-pages": "git add . & git commit -m 'gh-pages' & git push origin gh-pages & node ./gh-pages.js",
     "dev": "rollup -c -w",
     "start": "sirv public --no-clear",
     "check": "svelte-check --tsconfig ./tsconfig.json"
