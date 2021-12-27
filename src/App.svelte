@@ -1,13 +1,13 @@
 <script lang="ts">
   import LoginForm from './Components/LoginForm.svelte'
   import Pools from './Components/Pools.svelte'
-  let authenticated = true
+  import { username } from './stores.js'
 </script>
 
-{#if authenticated}
+{#if $username}
   <Pools />
 {:else}
-  <LoginForm bind:authenticated />
+  <LoginForm />
 {/if}
 
 <style>

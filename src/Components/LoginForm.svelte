@@ -1,6 +1,5 @@
 <script lang="ts">
   import { username } from '../stores'
-  export let authenticated
 
   interface CredentialsInterface {
     login: string
@@ -11,7 +10,8 @@
   let password: string
 
   const validateCredentials = (credentials: CredentialsInterface): void => {
-    authenticated = credentials.login === 'admin' && credentials.password === 'admin'
+    const authenticated =
+      credentials.login === 'admin' && credentials.password === 'admin'
     if (authenticated) {
       username.set(login)
     }
