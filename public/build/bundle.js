@@ -720,6 +720,10 @@ var app = (function () {
         else
             dispatch_dev('SvelteDOMSetAttribute', { node, attribute, value });
     }
+    function prop_dev(node, property, value) {
+        node[property] = value;
+        dispatch_dev('SvelteDOMSetProperty', { node, property, value });
+    }
     function set_data_dev(text, data) {
         data = '' + data;
         if (text.wholeText === data)
@@ -1241,99 +1245,135 @@ var app = (function () {
     const file$2 = "src\\Components\\Pool.svelte";
 
     function create_fragment$3(ctx) {
+    	let section;
     	let p;
     	let t0;
     	let t1;
+    	let t2;
     	let button0;
-    	let t3;
-    	let button1;
-    	let t4_value = /*answer1*/ ctx[3].value + "";
     	let t4;
-    	let t5;
-    	let t6_value = /*answer1*/ ctx[3].count + "";
+    	let h3;
     	let t6;
+    	let button1;
+    	let t7_value = /*answer1*/ ctx[3].value + "";
     	let t7;
     	let t8;
-    	let button2;
-    	let t9_value = /*answer2*/ ctx[4].value + "";
+    	let progress0;
     	let t9;
+    	let progress0_value_value;
+    	let t10_value = (Math.round(/*answer1*/ ctx[3].count / /*allVotes*/ ctx[5] * 100 * 100) / 100 || 0) + "";
     	let t10;
-    	let t11_value = /*answer2*/ ctx[4].count + "";
     	let t11;
+    	let button2;
+    	let t12_value = /*answer2*/ ctx[4].value + "";
     	let t12;
+    	let t13;
+    	let progress1;
+    	let t14;
+    	let progress1_value_value;
+    	let t15_value = (Math.round(/*answer2*/ ctx[4].count / /*allVotes*/ ctx[5] * 100 * 100) / 100 || 0) + "";
+    	let t15;
     	let mounted;
     	let dispose;
 
     	const block = {
     		c: function create() {
+    			section = element("section");
     			p = element("p");
-    			t0 = text(/*question*/ ctx[2]);
-    			t1 = space();
+    			t0 = text("Question: ");
+    			t1 = text(/*question*/ ctx[2]);
+    			t2 = space();
     			button0 = element("button");
     			button0.textContent = "X";
-    			t3 = space();
+    			t4 = space();
+    			h3 = element("h3");
+    			h3.textContent = "Vote";
+    			t6 = space();
     			button1 = element("button");
-    			t4 = text(t4_value);
-    			t5 = text(" (");
-    			t6 = text(t6_value);
-    			t7 = text(")");
+    			t7 = text(t7_value);
     			t8 = space();
+    			progress0 = element("progress");
+    			t9 = text(".");
+    			t10 = text(t10_value);
+    			t11 = space();
     			button2 = element("button");
-    			t9 = text(t9_value);
-    			t10 = text(" (");
-    			t11 = text(t11_value);
-    			t12 = text(")");
-    			add_location(button0, file$2, 7, 13, 164);
-    			add_location(p, file$2, 6, 0, 147);
-    			add_location(button1, file$2, 9, 0, 232);
-    			add_location(button2, file$2, 12, 0, 340);
+    			t12 = text(t12_value);
+    			t13 = space();
+    			progress1 = element("progress");
+    			t14 = text(".");
+    			t15 = text(t15_value);
+    			add_location(button0, file$2, 10, 25, 263);
+    			add_location(p, file$2, 9, 2, 234);
+    			add_location(h3, file$2, 12, 2, 335);
+    			progress0.value = progress0_value_value = /*answer1*/ ctx[3].count / /*allVotes*/ ctx[5] || 0;
+    			add_location(progress0, file$2, 15, 4, 450);
+    			attr_dev(button1, "class", "vote svelte-1dzfc4k");
+    			add_location(button1, file$2, 13, 2, 351);
+    			progress1.value = progress1_value_value = /*answer2*/ ctx[4].count / /*allVotes*/ ctx[5] || 0;
+    			add_location(progress1, file$2, 21, 4, 699);
+    			attr_dev(button2, "class", "vote svelte-1dzfc4k");
+    			add_location(button2, file$2, 19, 2, 600);
+    			attr_dev(section, "class", "votes svelte-1dzfc4k");
+    			add_location(section, file$2, 8, 0, 208);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
-    			insert_dev(target, p, anchor);
+    			insert_dev(target, section, anchor);
+    			append_dev(section, p);
     			append_dev(p, t0);
     			append_dev(p, t1);
+    			append_dev(p, t2);
     			append_dev(p, button0);
-    			insert_dev(target, t3, anchor);
-    			insert_dev(target, button1, anchor);
-    			append_dev(button1, t4);
-    			append_dev(button1, t5);
-    			append_dev(button1, t6);
+    			append_dev(section, t4);
+    			append_dev(section, h3);
+    			append_dev(section, t6);
+    			append_dev(section, button1);
     			append_dev(button1, t7);
-    			insert_dev(target, t8, anchor);
-    			insert_dev(target, button2, anchor);
-    			append_dev(button2, t9);
-    			append_dev(button2, t10);
-    			append_dev(button2, t11);
+    			append_dev(button1, t8);
+    			append_dev(button1, progress0);
+    			append_dev(progress0, t9);
+    			append_dev(button1, t10);
+    			append_dev(section, t11);
+    			append_dev(section, button2);
     			append_dev(button2, t12);
+    			append_dev(button2, t13);
+    			append_dev(button2, progress1);
+    			append_dev(progress1, t14);
+    			append_dev(button2, t15);
 
     			if (!mounted) {
     				dispose = [
-    					listen_dev(button0, "click", /*click_handler*/ ctx[5], false, false, false),
-    					listen_dev(button1, "click", /*click_handler_1*/ ctx[6], false, false, false),
-    					listen_dev(button2, "click", /*click_handler_2*/ ctx[7], false, false, false)
+    					listen_dev(button0, "click", /*click_handler*/ ctx[6], false, false, false),
+    					listen_dev(button1, "click", /*click_handler_1*/ ctx[7], false, false, false),
+    					listen_dev(button2, "click", /*click_handler_2*/ ctx[8], false, false, false)
     				];
 
     				mounted = true;
     			}
     		},
     		p: function update(ctx, [dirty]) {
-    			if (dirty & /*question*/ 4) set_data_dev(t0, /*question*/ ctx[2]);
-    			if (dirty & /*answer1*/ 8 && t4_value !== (t4_value = /*answer1*/ ctx[3].value + "")) set_data_dev(t4, t4_value);
-    			if (dirty & /*answer1*/ 8 && t6_value !== (t6_value = /*answer1*/ ctx[3].count + "")) set_data_dev(t6, t6_value);
-    			if (dirty & /*answer2*/ 16 && t9_value !== (t9_value = /*answer2*/ ctx[4].value + "")) set_data_dev(t9, t9_value);
-    			if (dirty & /*answer2*/ 16 && t11_value !== (t11_value = /*answer2*/ ctx[4].count + "")) set_data_dev(t11, t11_value);
+    			if (dirty & /*question*/ 4) set_data_dev(t1, /*question*/ ctx[2]);
+    			if (dirty & /*answer1*/ 8 && t7_value !== (t7_value = /*answer1*/ ctx[3].value + "")) set_data_dev(t7, t7_value);
+
+    			if (dirty & /*answer1, allVotes*/ 40 && progress0_value_value !== (progress0_value_value = /*answer1*/ ctx[3].count / /*allVotes*/ ctx[5] || 0)) {
+    				prop_dev(progress0, "value", progress0_value_value);
+    			}
+
+    			if (dirty & /*answer1, allVotes*/ 40 && t10_value !== (t10_value = (Math.round(/*answer1*/ ctx[3].count / /*allVotes*/ ctx[5] * 100 * 100) / 100 || 0) + "")) set_data_dev(t10, t10_value);
+    			if (dirty & /*answer2*/ 16 && t12_value !== (t12_value = /*answer2*/ ctx[4].value + "")) set_data_dev(t12, t12_value);
+
+    			if (dirty & /*answer2, allVotes*/ 48 && progress1_value_value !== (progress1_value_value = /*answer2*/ ctx[4].count / /*allVotes*/ ctx[5] || 0)) {
+    				prop_dev(progress1, "value", progress1_value_value);
+    			}
+
+    			if (dirty & /*answer2, allVotes*/ 48 && t15_value !== (t15_value = (Math.round(/*answer2*/ ctx[4].count / /*allVotes*/ ctx[5] * 100 * 100) / 100 || 0) + "")) set_data_dev(t15, t15_value);
     		},
     		i: noop,
     		o: noop,
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(p);
-    			if (detaching) detach_dev(t3);
-    			if (detaching) detach_dev(button1);
-    			if (detaching) detach_dev(t8);
-    			if (detaching) detach_dev(button2);
+    			if (detaching) detach_dev(section);
     			mounted = false;
     			run_all(dispose);
     		}
@@ -1356,6 +1396,7 @@ var app = (function () {
     	let { handlePoolDelete } = $$props;
     	let { handlePoolVote } = $$props;
     	let { question, answer1, answer2 } = $$props;
+    	let allVotes;
     	const writable_props = ['handlePoolDelete', 'handlePoolVote', 'question', 'answer1', 'answer2'];
 
     	Object.keys($$props).forEach(key => {
@@ -1379,7 +1420,8 @@ var app = (function () {
     		handlePoolVote,
     		question,
     		answer1,
-    		answer2
+    		answer2,
+    		allVotes
     	});
 
     	$$self.$inject_state = $$props => {
@@ -1388,11 +1430,18 @@ var app = (function () {
     		if ('question' in $$props) $$invalidate(2, question = $$props.question);
     		if ('answer1' in $$props) $$invalidate(3, answer1 = $$props.answer1);
     		if ('answer2' in $$props) $$invalidate(4, answer2 = $$props.answer2);
+    		if ('allVotes' in $$props) $$invalidate(5, allVotes = $$props.allVotes);
     	};
 
     	if ($$props && "$$inject" in $$props) {
     		$$self.$inject_state($$props.$$inject);
     	}
+
+    	$$self.$$.update = () => {
+    		if ($$self.$$.dirty & /*answer1, answer2*/ 24) {
+    			$$invalidate(5, allVotes = answer1.count + answer2.count);
+    		}
+    	};
 
     	return [
     		handlePoolDelete,
@@ -1400,6 +1449,7 @@ var app = (function () {
     		question,
     		answer1,
     		answer2,
+    		allVotes,
     		click_handler,
     		click_handler_1,
     		click_handler_2
