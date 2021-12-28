@@ -8,12 +8,14 @@
     pools = allStorage()
   }
 
-  const handlePoolVote = (answer: string, poolName: string): void => {
+  const poolVote = (e: CustomEvent<{ answer: string; poolName: string }>): void => {
+    const { answer, poolName } = e.detail
     updatePool(answer, poolName)
     fetchPools()
   }
 
-  const handlePoolDelete = (poolName: string): void => {
+  const poolDelete = (e: CustomEvent<{ poolName: string }>): void => {
+    const { poolName } = e.detail
     deletePool(poolName)
     fetchPools()
   }
@@ -21,15 +23,15 @@
 
 <section transition:slide>
   <h2>List</h2>
-  {#if pools}
-    {#each Object.values(pools) as pool (pool.question)}
-      <Pool
-        {handlePoolDelete}
-        {handlePoolVote}
-        question={pool.question}
-        answer1={pool.answer1}
-        answer2={pool.answer2}
-      />
-    {/each}
-  {/if}
+  {#each Object.values(pools) as pool (pool.question)}
+    <Pool
+      on:pool-delete={poolDelete}
+      on:pool-vote={poolVote}
+      question={pool.question}
+      answer1={pool.answer1}
+      answer2={pool.answer2}
+    />
+  {:else}
+    <p>You have no pools created.</p>
+  {/each}
 </section>

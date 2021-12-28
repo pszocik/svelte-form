@@ -210,6 +210,25 @@ var app = (function () {
     function set_current_component(component) {
         current_component = component;
     }
+    function get_current_component() {
+        if (!current_component)
+            throw new Error('Function called outside component initialization');
+        return current_component;
+    }
+    function createEventDispatcher() {
+        const component = get_current_component();
+        return (type, detail) => {
+            const callbacks = component.$$.callbacks[type];
+            if (callbacks) {
+                // TODO are there situations where events could be dispatched
+                // in a server (non-DOM) environment?
+                const event = custom_event(type, detail);
+                callbacks.slice().forEach(fn => {
+                    fn.call(component, event);
+                });
+            }
+        };
+    }
 
     const dirty_components = [];
     const binding_callbacks = [];
@@ -1255,23 +1274,23 @@ var app = (function () {
     	let h3;
     	let t6;
     	let button1;
-    	let t7_value = /*answer1*/ ctx[3].value + "";
+    	let t7_value = /*answer1*/ ctx[1].value + "";
     	let t7;
     	let t8;
     	let progress0;
     	let t9;
     	let progress0_value_value;
-    	let t10_value = (Math.round(/*answer1*/ ctx[3].count / /*allVotes*/ ctx[5] * 100 * 100) / 100 || 0) + "";
+    	let t10_value = (Math.round(/*answer1*/ ctx[1].count / /*allVotes*/ ctx[3] * 100 * 100) / 100 || 0) + "";
     	let t10;
     	let t11;
     	let button2;
-    	let t12_value = /*answer2*/ ctx[4].value + "";
+    	let t12_value = /*answer2*/ ctx[2].value + "";
     	let t12;
     	let t13;
     	let progress1;
     	let t14;
     	let progress1_value_value;
-    	let t15_value = (Math.round(/*answer2*/ ctx[4].count / /*allVotes*/ ctx[5] * 100 * 100) / 100 || 0) + "";
+    	let t15_value = (Math.round(/*answer2*/ ctx[2].count / /*allVotes*/ ctx[3] * 100 * 100) / 100 || 0) + "";
     	let t15;
     	let mounted;
     	let dispose;
@@ -1281,7 +1300,7 @@ var app = (function () {
     			section = element("section");
     			p = element("p");
     			t0 = text("Question: ");
-    			t1 = text(/*question*/ ctx[2]);
+    			t1 = text(/*question*/ ctx[0]);
     			t2 = space();
     			button0 = element("button");
     			button0.textContent = "X";
@@ -1302,19 +1321,19 @@ var app = (function () {
     			progress1 = element("progress");
     			t14 = text(".");
     			t15 = text(t15_value);
-    			add_location(button0, file$2, 10, 25, 263);
-    			add_location(p, file$2, 9, 2, 234);
-    			add_location(h3, file$2, 12, 2, 335);
-    			progress0.value = progress0_value_value = /*answer1*/ ctx[3].count / /*allVotes*/ ctx[5] || 0;
-    			add_location(progress0, file$2, 15, 4, 450);
+    			add_location(button0, file$2, 21, 25, 546);
+    			add_location(p, file$2, 20, 2, 517);
+    			add_location(h3, file$2, 23, 2, 614);
+    			progress0.value = progress0_value_value = /*answer1*/ ctx[1].count / /*allVotes*/ ctx[3] || 0;
+    			add_location(progress0, file$2, 26, 4, 725);
     			attr_dev(button1, "class", "vote svelte-1dzfc4k");
-    			add_location(button1, file$2, 13, 2, 351);
-    			progress1.value = progress1_value_value = /*answer2*/ ctx[4].count / /*allVotes*/ ctx[5] || 0;
-    			add_location(progress1, file$2, 21, 4, 699);
+    			add_location(button1, file$2, 24, 2, 630);
+    			progress1.value = progress1_value_value = /*answer2*/ ctx[2].count / /*allVotes*/ ctx[3] || 0;
+    			add_location(progress1, file$2, 32, 4, 970);
     			attr_dev(button2, "class", "vote svelte-1dzfc4k");
-    			add_location(button2, file$2, 19, 2, 600);
+    			add_location(button2, file$2, 30, 2, 875);
     			attr_dev(section, "class", "votes svelte-1dzfc4k");
-    			add_location(section, file$2, 8, 0, 208);
+    			add_location(section, file$2, 19, 0, 491);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -1354,21 +1373,21 @@ var app = (function () {
     			}
     		},
     		p: function update(ctx, [dirty]) {
-    			if (dirty & /*question*/ 4) set_data_dev(t1, /*question*/ ctx[2]);
-    			if (dirty & /*answer1*/ 8 && t7_value !== (t7_value = /*answer1*/ ctx[3].value + "")) set_data_dev(t7, t7_value);
+    			if (dirty & /*question*/ 1) set_data_dev(t1, /*question*/ ctx[0]);
+    			if (dirty & /*answer1*/ 2 && t7_value !== (t7_value = /*answer1*/ ctx[1].value + "")) set_data_dev(t7, t7_value);
 
-    			if (dirty & /*answer1, allVotes*/ 40 && progress0_value_value !== (progress0_value_value = /*answer1*/ ctx[3].count / /*allVotes*/ ctx[5] || 0)) {
+    			if (dirty & /*answer1, allVotes*/ 10 && progress0_value_value !== (progress0_value_value = /*answer1*/ ctx[1].count / /*allVotes*/ ctx[3] || 0)) {
     				prop_dev(progress0, "value", progress0_value_value);
     			}
 
-    			if (dirty & /*answer1, allVotes*/ 40 && t10_value !== (t10_value = (Math.round(/*answer1*/ ctx[3].count / /*allVotes*/ ctx[5] * 100 * 100) / 100 || 0) + "")) set_data_dev(t10, t10_value);
-    			if (dirty & /*answer2*/ 16 && t12_value !== (t12_value = /*answer2*/ ctx[4].value + "")) set_data_dev(t12, t12_value);
+    			if (dirty & /*answer1, allVotes*/ 10 && t10_value !== (t10_value = (Math.round(/*answer1*/ ctx[1].count / /*allVotes*/ ctx[3] * 100 * 100) / 100 || 0) + "")) set_data_dev(t10, t10_value);
+    			if (dirty & /*answer2*/ 4 && t12_value !== (t12_value = /*answer2*/ ctx[2].value + "")) set_data_dev(t12, t12_value);
 
-    			if (dirty & /*answer2, allVotes*/ 48 && progress1_value_value !== (progress1_value_value = /*answer2*/ ctx[4].count / /*allVotes*/ ctx[5] || 0)) {
+    			if (dirty & /*answer2, allVotes*/ 12 && progress1_value_value !== (progress1_value_value = /*answer2*/ ctx[2].count / /*allVotes*/ ctx[3] || 0)) {
     				prop_dev(progress1, "value", progress1_value_value);
     			}
 
-    			if (dirty & /*answer2, allVotes*/ 48 && t15_value !== (t15_value = (Math.round(/*answer2*/ ctx[4].count / /*allVotes*/ ctx[5] * 100 * 100) / 100 || 0) + "")) set_data_dev(t15, t15_value);
+    			if (dirty & /*answer2, allVotes*/ 12 && t15_value !== (t15_value = (Math.round(/*answer2*/ ctx[2].count / /*allVotes*/ ctx[3] * 100 * 100) / 100 || 0) + "")) set_data_dev(t15, t15_value);
     		},
     		i: noop,
     		o: noop,
@@ -1393,44 +1412,50 @@ var app = (function () {
     function instance$3($$self, $$props, $$invalidate) {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('Pool', slots, []);
-    	let { handlePoolDelete } = $$props;
-    	let { handlePoolVote } = $$props;
     	let { question, answer1, answer2 } = $$props;
+    	const dispatch = createEventDispatcher();
+
+    	const handleVote = (answer, poolName) => {
+    		dispatch('pool-vote', { poolName, answer });
+    	};
+
+    	const handleDelete = poolName => {
+    		dispatch('pool-delete', { poolName });
+    	};
+
     	let allVotes;
-    	const writable_props = ['handlePoolDelete', 'handlePoolVote', 'question', 'answer1', 'answer2'];
+    	const writable_props = ['question', 'answer1', 'answer2'];
 
     	Object.keys($$props).forEach(key => {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<Pool> was created with unknown prop '${key}'`);
     	});
 
-    	const click_handler = () => handlePoolDelete(question);
-    	const click_handler_1 = () => handlePoolVote('answer1', question);
-    	const click_handler_2 = () => handlePoolVote('answer2', question);
+    	const click_handler = () => handleDelete(question);
+    	const click_handler_1 = () => handleVote('answer1', question);
+    	const click_handler_2 = () => handleVote('answer2', question);
 
     	$$self.$$set = $$props => {
-    		if ('handlePoolDelete' in $$props) $$invalidate(0, handlePoolDelete = $$props.handlePoolDelete);
-    		if ('handlePoolVote' in $$props) $$invalidate(1, handlePoolVote = $$props.handlePoolVote);
-    		if ('question' in $$props) $$invalidate(2, question = $$props.question);
-    		if ('answer1' in $$props) $$invalidate(3, answer1 = $$props.answer1);
-    		if ('answer2' in $$props) $$invalidate(4, answer2 = $$props.answer2);
+    		if ('question' in $$props) $$invalidate(0, question = $$props.question);
+    		if ('answer1' in $$props) $$invalidate(1, answer1 = $$props.answer1);
+    		if ('answer2' in $$props) $$invalidate(2, answer2 = $$props.answer2);
     	};
 
     	$$self.$capture_state = () => ({
-    		handlePoolDelete,
-    		handlePoolVote,
+    		createEventDispatcher,
     		question,
     		answer1,
     		answer2,
+    		dispatch,
+    		handleVote,
+    		handleDelete,
     		allVotes
     	});
 
     	$$self.$inject_state = $$props => {
-    		if ('handlePoolDelete' in $$props) $$invalidate(0, handlePoolDelete = $$props.handlePoolDelete);
-    		if ('handlePoolVote' in $$props) $$invalidate(1, handlePoolVote = $$props.handlePoolVote);
-    		if ('question' in $$props) $$invalidate(2, question = $$props.question);
-    		if ('answer1' in $$props) $$invalidate(3, answer1 = $$props.answer1);
-    		if ('answer2' in $$props) $$invalidate(4, answer2 = $$props.answer2);
-    		if ('allVotes' in $$props) $$invalidate(5, allVotes = $$props.allVotes);
+    		if ('question' in $$props) $$invalidate(0, question = $$props.question);
+    		if ('answer1' in $$props) $$invalidate(1, answer1 = $$props.answer1);
+    		if ('answer2' in $$props) $$invalidate(2, answer2 = $$props.answer2);
+    		if ('allVotes' in $$props) $$invalidate(3, allVotes = $$props.allVotes);
     	};
 
     	if ($$props && "$$inject" in $$props) {
@@ -1438,18 +1463,18 @@ var app = (function () {
     	}
 
     	$$self.$$.update = () => {
-    		if ($$self.$$.dirty & /*answer1, answer2*/ 24) {
-    			$$invalidate(5, allVotes = answer1.count + answer2.count);
+    		if ($$self.$$.dirty & /*answer1, answer2*/ 6) {
+    			$$invalidate(3, allVotes = answer1.count + answer2.count);
     		}
     	};
 
     	return [
-    		handlePoolDelete,
-    		handlePoolVote,
     		question,
     		answer1,
     		answer2,
     		allVotes,
+    		handleVote,
+    		handleDelete,
     		click_handler,
     		click_handler_1,
     		click_handler_2
@@ -1459,14 +1484,7 @@ var app = (function () {
     class Pool extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-
-    		init(this, options, instance$3, create_fragment$3, safe_not_equal, {
-    			handlePoolDelete: 0,
-    			handlePoolVote: 1,
-    			question: 2,
-    			answer1: 3,
-    			answer2: 4
-    		});
+    		init(this, options, instance$3, create_fragment$3, safe_not_equal, { question: 0, answer1: 1, answer2: 2 });
 
     		dispatch_dev("SvelteRegisterComponent", {
     			component: this,
@@ -1478,41 +1496,17 @@ var app = (function () {
     		const { ctx } = this.$$;
     		const props = options.props || {};
 
-    		if (/*handlePoolDelete*/ ctx[0] === undefined && !('handlePoolDelete' in props)) {
-    			console.warn("<Pool> was created without expected prop 'handlePoolDelete'");
-    		}
-
-    		if (/*handlePoolVote*/ ctx[1] === undefined && !('handlePoolVote' in props)) {
-    			console.warn("<Pool> was created without expected prop 'handlePoolVote'");
-    		}
-
-    		if (/*question*/ ctx[2] === undefined && !('question' in props)) {
+    		if (/*question*/ ctx[0] === undefined && !('question' in props)) {
     			console.warn("<Pool> was created without expected prop 'question'");
     		}
 
-    		if (/*answer1*/ ctx[3] === undefined && !('answer1' in props)) {
+    		if (/*answer1*/ ctx[1] === undefined && !('answer1' in props)) {
     			console.warn("<Pool> was created without expected prop 'answer1'");
     		}
 
-    		if (/*answer2*/ ctx[4] === undefined && !('answer2' in props)) {
+    		if (/*answer2*/ ctx[2] === undefined && !('answer2' in props)) {
     			console.warn("<Pool> was created without expected prop 'answer2'");
     		}
-    	}
-
-    	get handlePoolDelete() {
-    		throw new Error("<Pool>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
-    	}
-
-    	set handlePoolDelete(value) {
-    		throw new Error("<Pool>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
-    	}
-
-    	get handlePoolVote() {
-    		throw new Error("<Pool>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
-    	}
-
-    	set handlePoolVote(value) {
-    		throw new Error("<Pool>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
     	get question() {
@@ -1551,86 +1545,36 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (20:2) {#if pools}
-    function create_if_block$2(ctx) {
-    	let each_blocks = [];
-    	let each_1_lookup = new Map();
-    	let each_1_anchor;
-    	let current;
-    	let each_value = Object.values(/*pools*/ ctx[0]);
-    	validate_each_argument(each_value);
-    	const get_key = ctx => /*pool*/ ctx[4].question;
-    	validate_each_keys(ctx, each_value, get_each_context, get_key);
-
-    	for (let i = 0; i < each_value.length; i += 1) {
-    		let child_ctx = get_each_context(ctx, each_value, i);
-    		let key = get_key(child_ctx);
-    		each_1_lookup.set(key, each_blocks[i] = create_each_block(key, child_ctx));
-    	}
+    // (30:2) {:else}
+    function create_else_block$2(ctx) {
+    	let p;
 
     	const block = {
     		c: function create() {
-    			for (let i = 0; i < each_blocks.length; i += 1) {
-    				each_blocks[i].c();
-    			}
-
-    			each_1_anchor = empty();
+    			p = element("p");
+    			p.textContent = "You have no pools created.";
+    			add_location(p, file$1, 30, 4, 786);
     		},
     		m: function mount(target, anchor) {
-    			for (let i = 0; i < each_blocks.length; i += 1) {
-    				each_blocks[i].m(target, anchor);
-    			}
-
-    			insert_dev(target, each_1_anchor, anchor);
-    			current = true;
-    		},
-    		p: function update(ctx, dirty) {
-    			if (dirty & /*handlePoolDelete, handlePoolVote, Object, pools*/ 7) {
-    				each_value = Object.values(/*pools*/ ctx[0]);
-    				validate_each_argument(each_value);
-    				group_outros();
-    				validate_each_keys(ctx, each_value, get_each_context, get_key);
-    				each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx, each_value, each_1_lookup, each_1_anchor.parentNode, outro_and_destroy_block, create_each_block, each_1_anchor, get_each_context);
-    				check_outros();
-    			}
-    		},
-    		i: function intro(local) {
-    			if (current) return;
-
-    			for (let i = 0; i < each_value.length; i += 1) {
-    				transition_in(each_blocks[i]);
-    			}
-
-    			current = true;
-    		},
-    		o: function outro(local) {
-    			for (let i = 0; i < each_blocks.length; i += 1) {
-    				transition_out(each_blocks[i]);
-    			}
-
-    			current = false;
+    			insert_dev(target, p, anchor);
     		},
     		d: function destroy(detaching) {
-    			for (let i = 0; i < each_blocks.length; i += 1) {
-    				each_blocks[i].d(detaching);
-    			}
-
-    			if (detaching) detach_dev(each_1_anchor);
+    			if (detaching) detach_dev(p);
     		}
     	};
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_if_block$2.name,
-    		type: "if",
-    		source: "(20:2) {#if pools}",
+    		id: create_else_block$2.name,
+    		type: "else",
+    		source: "(30:2) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (21:4) {#each Object.values(pools) as pool (pool.question)}
+    // (22:2) {#each Object.values(pools) as pool (pool.question)}
     function create_each_block(key_1, ctx) {
     	let first;
     	let pool;
@@ -1638,14 +1582,15 @@ var app = (function () {
 
     	pool = new Pool({
     			props: {
-    				handlePoolDelete: /*handlePoolDelete*/ ctx[2],
-    				handlePoolVote: /*handlePoolVote*/ ctx[1],
     				question: /*pool*/ ctx[4].question,
     				answer1: /*pool*/ ctx[4].answer1,
     				answer2: /*pool*/ ctx[4].answer2
     			},
     			$$inline: true
     		});
+
+    	pool.$on("pool-delete", /*poolDelete*/ ctx[2]);
+    	pool.$on("pool-vote", /*poolVote*/ ctx[1]);
 
     	const block = {
     		key: key_1,
@@ -1687,7 +1632,7 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(21:4) {#each Object.values(pools) as pool (pool.question)}",
+    		source: "(22:2) {#each Object.values(pools) as pool (pool.question)}",
     		ctx
     	});
 
@@ -1698,9 +1643,26 @@ var app = (function () {
     	let section;
     	let h2;
     	let t1;
+    	let each_blocks = [];
+    	let each_1_lookup = new Map();
     	let section_transition;
     	let current;
-    	let if_block = /*pools*/ ctx[0] && create_if_block$2(ctx);
+    	let each_value = Object.values(/*pools*/ ctx[0]);
+    	validate_each_argument(each_value);
+    	const get_key = ctx => /*pool*/ ctx[4].question;
+    	validate_each_keys(ctx, each_value, get_each_context, get_key);
+
+    	for (let i = 0; i < each_value.length; i += 1) {
+    		let child_ctx = get_each_context(ctx, each_value, i);
+    		let key = get_key(child_ctx);
+    		each_1_lookup.set(key, each_blocks[i] = create_each_block(key, child_ctx));
+    	}
+
+    	let each_1_else = null;
+
+    	if (!each_value.length) {
+    		each_1_else = create_else_block$2(ctx);
+    	}
 
     	const block = {
     		c: function create() {
@@ -1708,9 +1670,17 @@ var app = (function () {
     			h2 = element("h2");
     			h2.textContent = "List";
     			t1 = space();
-    			if (if_block) if_block.c();
-    			add_location(h2, file$1, 18, 2, 487);
-    			add_location(section, file$1, 17, 0, 458);
+
+    			for (let i = 0; i < each_blocks.length; i += 1) {
+    				each_blocks[i].c();
+    			}
+
+    			if (each_1_else) {
+    				each_1_else.c();
+    			}
+
+    			add_location(h2, file$1, 20, 2, 533);
+    			add_location(section, file$1, 19, 0, 504);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -1719,36 +1689,44 @@ var app = (function () {
     			insert_dev(target, section, anchor);
     			append_dev(section, h2);
     			append_dev(section, t1);
-    			if (if_block) if_block.m(section, null);
+
+    			for (let i = 0; i < each_blocks.length; i += 1) {
+    				each_blocks[i].m(section, null);
+    			}
+
+    			if (each_1_else) {
+    				each_1_else.m(section, null);
+    			}
+
     			current = true;
     		},
     		p: function update(ctx, [dirty]) {
-    			if (/*pools*/ ctx[0]) {
-    				if (if_block) {
-    					if_block.p(ctx, dirty);
-
-    					if (dirty & /*pools*/ 1) {
-    						transition_in(if_block, 1);
-    					}
-    				} else {
-    					if_block = create_if_block$2(ctx);
-    					if_block.c();
-    					transition_in(if_block, 1);
-    					if_block.m(section, null);
-    				}
-    			} else if (if_block) {
+    			if (dirty & /*Object, pools, poolDelete, poolVote*/ 7) {
+    				each_value = Object.values(/*pools*/ ctx[0]);
+    				validate_each_argument(each_value);
     				group_outros();
-
-    				transition_out(if_block, 1, 1, () => {
-    					if_block = null;
-    				});
-
+    				validate_each_keys(ctx, each_value, get_each_context, get_key);
+    				each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx, each_value, each_1_lookup, section, outro_and_destroy_block, create_each_block, null, get_each_context);
     				check_outros();
+
+    				if (each_value.length) {
+    					if (each_1_else) {
+    						each_1_else.d(1);
+    						each_1_else = null;
+    					}
+    				} else if (!each_1_else) {
+    					each_1_else = create_else_block$2(ctx);
+    					each_1_else.c();
+    					each_1_else.m(section, null);
+    				}
     			}
     		},
     		i: function intro(local) {
     			if (current) return;
-    			transition_in(if_block);
+
+    			for (let i = 0; i < each_value.length; i += 1) {
+    				transition_in(each_blocks[i]);
+    			}
 
     			add_render_callback(() => {
     				if (!section_transition) section_transition = create_bidirectional_transition(section, slide, {}, true);
@@ -1758,14 +1736,22 @@ var app = (function () {
     			current = true;
     		},
     		o: function outro(local) {
-    			transition_out(if_block);
+    			for (let i = 0; i < each_blocks.length; i += 1) {
+    				transition_out(each_blocks[i]);
+    			}
+
     			if (!section_transition) section_transition = create_bidirectional_transition(section, slide, {}, false);
     			section_transition.run(0);
     			current = false;
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(section);
-    			if (if_block) if_block.d();
+
+    			for (let i = 0; i < each_blocks.length; i += 1) {
+    				each_blocks[i].d();
+    			}
+
+    			if (each_1_else) each_1_else.d();
     			if (detaching && section_transition) section_transition.end();
     		}
     	};
@@ -1790,12 +1776,14 @@ var app = (function () {
     		$$invalidate(0, pools = allStorage());
     	};
 
-    	const handlePoolVote = (answer, poolName) => {
+    	const poolVote = e => {
+    		const { answer, poolName } = e.detail;
     		updatePool(answer, poolName);
     		fetchPools();
     	};
 
-    	const handlePoolDelete = poolName => {
+    	const poolDelete = e => {
+    		const { poolName } = e.detail;
     		deletePool(poolName);
     		fetchPools();
     	};
@@ -1814,8 +1802,8 @@ var app = (function () {
     		Pool,
     		pools,
     		fetchPools,
-    		handlePoolVote,
-    		handlePoolDelete
+    		poolVote,
+    		poolDelete
     	});
 
     	$$self.$inject_state = $$props => {
@@ -1826,7 +1814,7 @@ var app = (function () {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [pools, handlePoolVote, handlePoolDelete];
+    	return [pools, poolVote, poolDelete];
     }
 
     class PoolsList extends SvelteComponentDev {

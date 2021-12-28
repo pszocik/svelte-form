@@ -5,7 +5,7 @@ export const addPool = (pool: poolFormData): void => {
 }
 
 export const updatePool = (answer: string, poolName: string): void => {
-  const pool = JSON.parse(window.localStorage.getItem(poolName)) as poolFormData
+  const pool = <poolFormData>JSON.parse(window.localStorage.getItem(poolName))
   if (answer === 'answer1') {
     pool.answer1.count += 1
   } else {
@@ -20,7 +20,7 @@ export const allStorage = () => {
   let i = keys.length
 
   while (i--) {
-    archive[keys[i]] = JSON.parse(localStorage.getItem(keys[i])) as poolFormData
+    archive[keys[i]] = <poolFormData>JSON.parse(localStorage.getItem(keys[i]))
   }
 
   return archive
