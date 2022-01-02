@@ -19,6 +19,9 @@
     })
   }
   let allVotes: number
+  let answer1Votes: number
+  let answer2Votes: number
+
   $: allVotes = answer1.count + answer2.count
   $: answer1Votes = answer1.count / allVotes || 0
   $: answer2Votes = answer2.count / allVotes || 0
